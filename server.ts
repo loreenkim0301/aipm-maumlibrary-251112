@@ -221,6 +221,7 @@ async function startServer() {
         process.env.GEMINI_API_KEY &&
           process.env.GEMINI_API_KEY !== 'MY_GEMINI_API_KEY'
       ),
+      hasGithubToken: Boolean(process.env.GITHUB_TOKEN),
       defaultProvider: 'gemini',
       model: activeConfig.model,
       tonePreset: activeConfig.tonePreset,
@@ -228,6 +229,33 @@ async function startServer() {
         ? process.env.GEMINI_API_KEY.substring(0, 6) + '...'
         : 'none'
     });
+  });
+
+  // Git Push endpoint using server GITHUB_TOKEN secret
+  app.post('/api/admin/git-push', async (req, res) => {
+    try {
+      const token = process.env.GITHUB_TOKEN;
+      if (!token) {
+        return res.status(400).json({
+          error: 'GITHUB_TOKEN 환경변수가 감지되지 않았습니다. AI Studio의 Secrets 메뉴에서 GITHUB_TOKEN이 등록되어 있는지 확인해 주세요.'
+        });
+      }
+
+      const { execSync } = await import('child_process');
+      const cleanToken = token.trim();
+      const repoUrl = `https://${cleanToken}@github.com/loreenkim0301/aipm-maumlibrary-251112.git`;
+
+      execSync('git config --global --add safe.directory /app/applet || true', { encoding: 'utf-8' });
+      execSync('git branch -M main', { encoding: 'utf-8' });
+
+      const output = execSync(`git push -u "${repoUrl}" main`, { encoding: 'utf-8' });
+      console.log('Git push succeeded:', output);
+      res.json({ success: true, output });
+    } catch (err: any) {
+      console.error('Git push failed:', err);
+      const errMsg = err?.stderr?.toString() || err?.message || String(err);
+      res.status(500).json({ error: errMsg });
+    }
   });
 
   // Admin Auth endpoint
