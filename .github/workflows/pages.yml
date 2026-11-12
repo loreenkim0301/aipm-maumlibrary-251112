@@ -3,6 +3,9 @@ name: 깃헙 페이지스 자동 배포
 on:
   push:
     branches: [main]
+  # PR을 열면 빌드만 미리 해 봐요(CI). 배포는 main에 들어갈 때만 해요(CD).
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 permissions:
   contents: read
@@ -25,6 +28,7 @@ jobs:
         with:
           path: dist
   deploy:
+    if: github.event_name != 'pull_request'
     needs: build
     runs-on: ubuntu-latest
     environment:
