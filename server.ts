@@ -248,13 +248,13 @@ async function startServer() {
       execSync('git config --global --add safe.directory /app/applet || true', { encoding: 'utf-8' });
       execSync('git branch -M main', { encoding: 'utf-8' });
 
-      const output = execSync(`git push -u "${repoUrl}" main`, { encoding: 'utf-8' });
-      console.log('Git push succeeded:', output);
-      res.json({ success: true, output });
+      execSync(`git push -u "${repoUrl}" main`, { encoding: 'utf-8' });
+      execSync('git remote set-url origin https://github.com/loreenkim0301/aipm-maumlibrary-251112.git', { encoding: 'utf-8' });
+      console.log('Git push succeeded to remote main.');
+      res.json({ success: true, message: '깃헙 저장소(main 브랜치)로 성공적으로 푸시되었습니다.' });
     } catch (err: any) {
-      console.error('Git push failed:', err);
-      const errMsg = err?.stderr?.toString() || err?.message || String(err);
-      res.status(500).json({ error: errMsg });
+      console.error('Git push failed');
+      res.status(500).json({ error: '깃헙 푸시 중 오류가 발생했습니다.' });
     }
   });
 
