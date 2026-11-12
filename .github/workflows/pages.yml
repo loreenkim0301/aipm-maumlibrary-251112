@@ -16,12 +16,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-      - run: npm install
+      # 이 앱은 bun.lock(번)으로 부품 버전을 고정해 두었어요. npm으로 설치하면 버전이 충돌해요.
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install --frozen-lockfile
       # 깃헙 페이지스 주소는 /저장소이름/ 아래에 열리므로 base를 맞춰요.
-      - run: npx vite build --base=/${{ github.event.repository.name }}/
+      - run: bunx vite build --base=/${{ github.event.repository.name }}/
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
