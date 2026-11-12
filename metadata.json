@@ -1,0 +1,8 @@
+{
+  "name": "마음책방",
+  "description": "오늘 당신의 마음에 어울리는 책 세 권을 골라주는 AI 감정 책방",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

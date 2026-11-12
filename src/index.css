@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #f3f5f4;
+  --surface: #ffffff;
+  --ink: #1d2826;
+  --muted: #5d6b68;
+  --line: #d9e0de;
+  --accent: #2c5f5d;
+  --accent-ink: #ffffff;
+  --accent-soft: #e2ecea;
+  --warn: #8a5a12;
+  --warn-soft: #f8efdf;
+  --alert: #9b2c2c;
+  --alert-soft: #f9e8e6;
+  --display: "Gowun Batang", "Noto Serif KR", Georgia, serif;
+  --sans: "Noto Sans KR", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121817;
+    --surface: #1b2322;
+    --ink: #e4ebe9;
+    --muted: #9aaba7;
+    --line: #2c3836;
+    --accent: #7fb8b4;
+    --accent-ink: #0f1a19;
+    --accent-soft: #22312f;
+    --warn: #e3b46a;
+    --warn-soft: #33291a;
+    --alert: #f0a19a;
+    --alert-soft: #3a2221;
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #121817;
+  --surface: #1b2322;
+  --ink: #e4ebe9;
+  --muted: #9aaba7;
+  --line: #2c3836;
+  --accent: #7fb8b4;
+  --accent-ink: #0f1a19;
+  --accent-soft: #22312f;
+  --warn: #e3b46a;
+  --warn-soft: #33291a;
+  --alert: #f0a19a;
+  --alert-soft: #3a2221;
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-serif-batang {
+  font-family: var(--display);
+}
